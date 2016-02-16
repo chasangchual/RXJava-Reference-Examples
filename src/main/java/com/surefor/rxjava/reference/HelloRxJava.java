@@ -5,6 +5,8 @@ import rx.Observable;
 import rx.functions.Action1;
 
 /**
+ * Hello RxJava, the first RxJava codes
+ *
  * Created by chae on 2/11/2016.
  */
 public class HelloRxJava {

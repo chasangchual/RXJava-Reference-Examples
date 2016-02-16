@@ -6,10 +6,12 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 
 /**
- * Created by chae on 2/11/2016.
+ * Basic way to create an observable with Observable.from() & Observable.just()
  *
  * These converted Observables will synchronously invoke the onNext( ) method of any subscriber that subscribes to
  * them, for each item to be emitted by the Observable, and will then invoke the subscriber’s onCompleted( ) method.
+ *
+ * Created by chae on 2/11/2016.
  */
 public class CreateObserableWithExistingDataStructure {
     /**
