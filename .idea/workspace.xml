@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40fb21b7-fef9-44a1-bbaf-29ea8bfb0c90" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/surefor/rxjava/reference/CreateObserableWithCreateMethod$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/surefor/rxjava/reference/CreateObserableWithCreateMethod$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/surefor/rxjava/reference/CreateObserableWithCreateMethod$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/surefor/rxjava/reference/CreateObserableWithCreateMethod.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/surefor/rxjava/reference/CreateObserableWithExistingDataStructure$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/surefor/rxjava/reference/CreateObserableWithExistingDataStructure$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/surefor/rxjava/reference/CreateObserableWithExistingDataStructure$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/surefor/rxjava/reference/CreateObserableWithExistingDataStructure$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/surefor/rxjava/reference/CreateObserableWithExistingDataStructure$5.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/surefor/rxjava/reference/CreateObserableWithExistingDataStructure.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/surefor/rxjava/reference/HelloRxJava$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/surefor/rxjava/reference/HelloRxJava.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/surefor/rxjava/reference/CreateObserableWithExistingDataStructure.java" afterPath="$PROJECT_DIR$/src/main/java/com/surefor/rxjava/reference/CreateObserableWithFrom.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/surefor/rxjava/reference/HelloRxJava.java" afterPath="$PROJECT_DIR$/src/main/java/com/surefor/rxjava/reference/HelloRxJava.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/surefor/rxjava/reference/TransformObserablesWithOperators.java" afterPath="$PROJECT_DIR$/src/main/java/com/surefor/rxjava/reference/TransformObserablesWithOperators.java" />
-    </list>
+    <list default="true" id="40fb21b7-fef9-44a1-bbaf-29ea8bfb0c90" name="Default" comment="" />
     <ignored path="RXJava-Reference.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -69,8 +51,8 @@
       <file leaf-file-name="CreateObserableWithFrom.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/surefor/rxjava/reference/CreateObserableWithFrom.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8786408">
-              <caret line="81" column="67" selection-start-line="81" selection-start-column="67" selection-end-line="81" selection-end-column="67" />
+            <state vertical-scroll-proportion="0.8737864">
+              <caret line="81" column="67" selection-start-line="0" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#891#892#0" expanded="true" />
@@ -856,12 +838,12 @@
       <workItem from="1455670008819" duration="2504000" />
       <workItem from="1455746112985" duration="1330000" />
       <workItem from="1456265868875" duration="873000" />
-      <workItem from="1456341403386" duration="1926000" />
+      <workItem from="1456341403386" duration="2377000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24440000" />
+    <option name="totallyTimeSpent" value="24891000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1592" y="-8" width="1936" height="1096" extended-state="6" />
@@ -1492,8 +1474,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/surefor/rxjava/reference/CreateObserableWithFrom.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8786408">
-          <caret line="81" column="67" selection-start-line="81" selection-start-column="67" selection-end-line="81" selection-end-column="67" />
+        <state vertical-scroll-proportion="0.8737864">
+          <caret line="81" column="67" selection-start-line="0" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#891#892#0" expanded="true" />
