@@ -2,7 +2,6 @@ package com.surefor.rxjava.reference;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
@@ -73,17 +72,6 @@ public class TransformObserablesWithOperators {
     public static void subscribeSkipAndTake() {
         Observable<Integer> observable = getObservable1() ;
         observable.skip(30).take(5).subscribe((i)->System.out.println(i)) ;
-    }
-
-    public static void subscribeDefer() {
-        Observable<Integer> observable = getObservable1() ;
-        observable.defer(new Func0<Observable<Integer>>() {
-            @Override
-            public Observable<Integer> call() {
-                return Observable.just(-10) ;
-            }
-        }).subscribe((i)->System.out.println(i)) ;
-
     }
 
     public static void subscribeLastThenFirst() {
