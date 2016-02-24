@@ -1,8 +1,3 @@
-RxJava Reference Examples
-=
-### **2. Create an observable object with just() operator**
-
-```Java
 package com.surefor.rxjava.reference;
 
 import rx.Observable;
@@ -83,5 +78,3 @@ public class CreateObserableWithJust {
         CreateObserableWithJust.withJustOnNextOnErrorOnComplete8();
     }
 }
-
-```
