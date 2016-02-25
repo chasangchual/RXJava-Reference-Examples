@@ -6,11 +6,44 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
- * A way to make an observable with Obserable.create()
+ /**
+ * General ways to create an observable object with Observable.from()
+ *
+ * Once an observable object is created, RxJava will synchronously invoke a method corresponding to onNext()
+ * or three methods corresponding to onNext(), onError() and onComplete().
  *
  * Created by chae on 2/11/2016.
  */
-public class CreateObserableWithCreateMethod {
+public class CreateObserableWithCreate {
+
+    public static Observable<Integer> getObservable7() {
+        return Observable.create(new Observable.OnSubscribe<Integer>() {
+            public void call(Subscriber<? super Integer> subscriber) {
+                for(int i = 0 ; i < 4 ; i ++) {
+                    if(!subscriber.isUnsubscribed()) {
+                        subscriber.onNext(i);
+                    }
+                }
+                if(!subscriber.isUnsubscribed()) {
+                    subscriber.onCompleted();
+                }
+            }
+        }) ;
+    }
+
+    public static Observable<Integer> getObservable8() {
+        return Observable.create(subscriber -> {
+                for(int i = 0 ; i < 4 ; i ++) {
+                    if(!subscriber.isUnsubscribed()) {
+                        subscriber.onNext(i);
+                    }
+                }
+                if(!subscriber.isUnsubscribed()) {
+                    subscriber.onCompleted();
+                }
+        }) ;
+    }
+
     private static void triggerOnNext(Subscriber<? super Integer> subscriber) {
         for(int i = 0 ; i < 4 ; i ++) {
             if(!subscriber.isUnsubscribed()) {
@@ -54,7 +87,7 @@ public class CreateObserableWithCreateMethod {
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
         // 1) take a observable to invoke onNext() 4 times with a integer parameter.
-        Observable<Integer> observable = CreateObserableWithCreateMethod.getObservable() ;
+        Observable<Integer> observable = CreateObserableWithCreate.getObservable() ;
 
         // 2) Asynchronously subscribe given observable with a scheduler.
         // So, every time when subscriber.onNext() is executed, it creates a new thread and invoke call() method of Action1
@@ -75,7 +108,7 @@ public class CreateObserableWithCreateMethod {
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // invoke the subscriber action in synchronous way
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        observable = CreateObserableWithCreateMethod.getObservable() ;
+        observable = CreateObserableWithCreate.getObservable() ;
         // subscribes Observers but in synchronous way.
         System.out.println("## begin subscribe a observable in a synchronous way ##") ;
         observable.subscribe(new Action1<Integer>() {
