@@ -12,14 +12,20 @@ import rx.schedulers.Schedulers;
  * Once an observable object is created, RxJava will synchronously invoke a method corresponding to onNext()
  * or three methods corresponding to onNext(), onError() and onComplete().
  *
+ * And we get Subscriber run in asynchronous way with subscribeOn(Scheduler) method.
+ *
  * Created by chae on 2/11/2016.
  */
 public class CreateObserableWithCreate {
 
     public static Observable<Integer> getObservable7() {
+        return getObservable7(5) ;
+    }
+
+    public static Observable<Integer> getObservable7(int end) {
         return Observable.create(new Observable.OnSubscribe<Integer>() {
             public void call(Subscriber<? super Integer> subscriber) {
-                for(int i = 0 ; i < 4 ; i ++) {
+                for(int i = 0 ; i < end ; i ++) {
                     if(!subscriber.isUnsubscribed()) {
                         subscriber.onNext(i);
                     }
@@ -32,8 +38,12 @@ public class CreateObserableWithCreate {
     }
 
     public static Observable<Integer> getObservable8() {
+        return getObservable8(5) ;
+    }
+
+    public static Observable<Integer> getObservable8(int end) {
         return Observable.create(subscriber -> {
-                for(int i = 0 ; i < 4 ; i ++) {
+                for(int i = 0 ; i < end ; i ++) {
                     if(!subscriber.isUnsubscribed()) {
                         subscriber.onNext(i);
                     }
@@ -44,83 +54,49 @@ public class CreateObserableWithCreate {
         }) ;
     }
 
-    private static void triggerOnNext(Subscriber<? super Integer> subscriber) {
-        for(int i = 0 ; i < 4 ; i ++) {
-            if(!subscriber.isUnsubscribed()) {
-                subscriber.onNext(i);
-            }
-        }
-        if(!subscriber.isUnsubscribed()) {
-            subscriber.onCompleted();
-        }
+    public static void subscribe7() {
+        subscribe7(5) ;
     }
 
-    public static Observable<Integer> getObservable() {
-        // new Observable.OnSubscribe<Integer>() will be invoked when Observable.subscribe() is called.
-        // Meaning Observable.create() creates an observable with OnSubscribe() handler, then when Observable.subscribe()
-        // is called, call(Subscriber<? super Integer> subscriber) will be invoked.
-        return Observable.create(new Observable.OnSubscribe<Integer>() {
-            public void call(Subscriber<? super Integer> subscriber) {
-                triggerOnNext(subscriber) ;
+    public static void subscribe7(int end) {
+        Observable<Integer> observerable = getObservable7(end) ;
+        observerable.subscribe(new Action1<Integer>() { // for onNext()
+            public void call(Integer i) {
+                System.out.printf("Java 7 %d\n", i) ;
             }
         }) ;
     }
 
-    public static Observable<Integer> getObservable2() {
+    public static void subscribe8() {
+        subscribe8(5) ;
+    }
 
-        return Observable.create(new Observable.OnSubscribe<Integer>() {
-            public void call(Subscriber<? super Integer> subscriber) {
-                triggerOnNext(subscriber) ;
-            }
-        }).observeOn(Schedulers.newThread()) ;
+    public static void subscribe8(int end) {
+        Observable<Integer> observerable = getObservable7() ;
+        observerable.subscribe(i -> System.out.printf("Java 8 %d\n", i)) ;
+    }
+
+    public static void subscribeAsync8_1() {
+        Observable<Integer> observerable = getObservable8(10000) ;
+        observerable.subscribeOn(Schedulers.newThread()).subscribe(i -> System.out.printf("subscribeAsync1 - %d\n", i)) ;
+    }
+
+    public static void subscribeAsync8_2() {
+        Observable<Integer> observerable = getObservable8(10000) ;
+        observerable.subscribeOn(Schedulers.newThread()).subscribe(i -> System.out.printf("subscribeAsync2 - %d\n", i)) ;
     }
 
     /**
      * Here, we want to invoke a subscriber action in both, synchronous way and asynchronous way.
-     * It gets a observable to invoke onNext() 4 times with a integer parameter.
-     * Then it will subscribe the observable with a scheduler or not.
-     * @param args
      */
-    public static void main(String[] args) {
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        // invoke the subscriber action in asynchronous way
-        ////////////////////////////////////////////////////////////////////////////////////////////////
+    public static void main(String[] args) throws InterruptedException {
+        CreateObserableWithCreate.subscribe7() ;
+        CreateObserableWithCreate.subscribe8() ;
+        CreateObserableWithCreate.subscribeAsync8_1() ;
+        CreateObserableWithCreate.subscribeAsync8_2() ;
 
-        // 1) take a observable to invoke onNext() 4 times with a integer parameter.
-        Observable<Integer> observable = CreateObserableWithCreate.getObservable() ;
-
-        // 2) Asynchronously subscribe given observable with a scheduler.
-        // So, every time when subscriber.onNext() is executed, it creates a new thread and invoke call() method of Action1
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        System.out.println("-- begin subscribe a observable in a asynchronous way --") ;
-        observable.subscribeOn(Schedulers.newThread()).subscribe(new Action1<Integer>() {
-            public void call(Integer i) {
-                try {
-                    System.out.println("[ " + String.valueOf(System.currentTimeMillis()) + "] non blocking call : " + String.valueOf(i)) ;
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }) ;
-        System.out.println("-- end subscribe a observable in a asynchronous way --") ;
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        // invoke the subscriber action in synchronous way
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        observable = CreateObserableWithCreate.getObservable() ;
-        // subscribes Observers but in synchronous way.
-        System.out.println("## begin subscribe a observable in a synchronous way ##") ;
-        observable.subscribe(new Action1<Integer>() {
-            public void call(Integer i) {
-                try {
-                    System.out.println("[ " + String.valueOf(System.currentTimeMillis()) + "] blocking call : " + String.valueOf(i)) ;
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }) ;
-        System.out.println("## end subscribe a observable in a synchronous way ##") ;
+        while(true) {
+            Thread.sleep(10);
+        }
     }
 }
