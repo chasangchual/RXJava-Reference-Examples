@@ -17,7 +17,7 @@ public class CreateObserableWithJust {
     /**
      * Java 7, crate an observable object with Integer list. Then subscribe it covering onNext()
      */
-    public static void withJustOnNext7() {
+    public static void withJustOnNext_7() {
         Observable<Integer> observable = Observable.just(1, 2) ;
 
         Subscription s = observable.subscribe(new Action1<Integer>() { // for onNext()
@@ -30,7 +30,7 @@ public class CreateObserableWithJust {
     /**
      * Java 7, crate an observable object with Integer list. Then subscribe it covering onNext(), onError() and onComplete
      */
-    public static void withFromOnNextOnErrorOnComplete7() {
+    public static void withFromOnNextOnErrorOnComplete_7() {
         Observable<Integer> observable = Observable.just(1, 2) ;
 
         Subscription s = observable.subscribe( new Action1<Integer>() { // for onNext()
@@ -53,7 +53,7 @@ public class CreateObserableWithJust {
     /**
      * Java 8, crate an observable object with Integer list. Then subscribe it covering onNext()
      */
-    public static void withJustOnNext8() {
+    public static void withJustOnNext_8() {
         Observable<Integer> observable = Observable.just(1, 2) ;
 
         Subscription s = observable.subscribe(i -> System.out.printf("%d\n", i)) ;
@@ -62,7 +62,7 @@ public class CreateObserableWithJust {
     /**
      * Java 8, crate an observable object with Integer list. Then subscribe it covering onNext(), onError() and onComplete
      */
-    public static void withJustOnNextOnErrorOnComplete8() {
+    public static void withJustOnNextOnErrorOnComplete_8() {
         Observable<Integer> observable = Observable.just(1, 2) ;
 
         Subscription s = observable.subscribe(
@@ -72,9 +72,9 @@ public class CreateObserableWithJust {
     }
 
     public static void main(String[] args) {
-        CreateObserableWithJust.withJustOnNext7();
-        CreateObserableWithJust.withFromOnNextOnErrorOnComplete7();
-        CreateObserableWithJust.withJustOnNext8();
-        CreateObserableWithJust.withJustOnNextOnErrorOnComplete8();
+        CreateObserableWithJust.withJustOnNext_7();
+        CreateObserableWithJust.withFromOnNextOnErrorOnComplete_7();
+        CreateObserableWithJust.withJustOnNext_8();
+        CreateObserableWithJust.withJustOnNextOnErrorOnComplete_8();
     }
 }

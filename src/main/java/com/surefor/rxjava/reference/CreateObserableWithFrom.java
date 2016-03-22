@@ -17,7 +17,7 @@ public class CreateObserableWithFrom {
     /**
      * Java 7, crate an observable object with Integer list. Then subscribe it covering onNext()
      */
-    public static void withFromOnNext7() {
+    public static void withFromOnNext_7() {
         Integer[] list = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0} ;
         Observable<Integer> observable = Observable.from(list) ;
 
@@ -31,7 +31,7 @@ public class CreateObserableWithFrom {
     /**
      * Java 7, crate an observable object with Integer list. Then subscribe it covering onNext(), onError() and onComplete
      */
-    public static void withFromOnNextOnErrorOnComplete7() {
+    public static void withFromOnNextOnErrorOnComplete_7() {
         Integer[] list = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0} ;
         Observable<Integer> observable = Observable.from(list) ;
 
@@ -55,7 +55,7 @@ public class CreateObserableWithFrom {
     /**
      * Java 8, crate an observable object with Integer list. Then subscribe it covering onNext()
      */
-    public static void withFromOnNext8() {
+    public static void withFromOnNext_8() {
         Integer[] list = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
         Observable<Integer> observable = Observable.from(list);
 
@@ -65,7 +65,7 @@ public class CreateObserableWithFrom {
     /**
      * Java 8, crate an observable object with Integer list. Then subscribe it covering onNext(), onError() and onComplete
      */
-    public static void withFromOnNextOnErrorOnComplete8() {
+    public static void withFromOnNextOnErrorOnComplete_8() {
         Integer[] list = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
         Observable<Integer> observable = Observable.from(list);
 
@@ -76,9 +76,9 @@ public class CreateObserableWithFrom {
     }
 
     public static void main(String[] args) {
-        CreateObserableWithFrom.withFromOnNext7();
-        CreateObserableWithFrom.withFromOnNextOnErrorOnComplete7();
-        CreateObserableWithFrom.withFromOnNext8();
-        CreateObserableWithFrom.withFromOnNextOnErrorOnComplete8();
+        CreateObserableWithFrom.withFromOnNext_7();
+        CreateObserableWithFrom.withFromOnNextOnErrorOnComplete_7();
+        CreateObserableWithFrom.withFromOnNext_8();
+        CreateObserableWithFrom.withFromOnNextOnErrorOnComplete_8();
     }
 }

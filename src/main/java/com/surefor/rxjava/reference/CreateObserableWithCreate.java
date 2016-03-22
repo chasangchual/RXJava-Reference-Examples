@@ -2,6 +2,8 @@ package com.surefor.rxjava.reference;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
@@ -18,11 +20,11 @@ import rx.schedulers.Schedulers;
  */
 public class CreateObserableWithCreate {
 
-    public static Observable<Integer> getObservable7() {
-        return getObservable7(5) ;
-    }
 
-    public static Observable<Integer> getObservable7(int end) {
+    /**
+     * Java 7, crate an observable to omit 0 to end.
+     */
+    public static Observable<Integer> getObservable_7(int end) {
         return Observable.create(new Observable.OnSubscribe<Integer>() {
             public void call(Subscriber<? super Integer> subscriber) {
                 for(int i = 0 ; i < end ; i ++) {
@@ -37,11 +39,10 @@ public class CreateObserableWithCreate {
         }) ;
     }
 
-    public static Observable<Integer> getObservable8() {
-        return getObservable8(5) ;
-    }
-
-    public static Observable<Integer> getObservable8(int end) {
+    /**
+     * Java 8, crate an observable to omit 0 to end
+     */
+    public static Observable<Integer> getObservable_8(int end) {
         return Observable.create(subscriber -> {
                 for(int i = 0 ; i < end ; i ++) {
                     if(!subscriber.isUnsubscribed()) {
@@ -54,35 +55,59 @@ public class CreateObserableWithCreate {
         }) ;
     }
 
-    public static void subscribe7() {
-        subscribe7(5) ;
-    }
+    /**
+     * Java 7, create a observable with create() method and subscribe it
+     */
+    public static void subscribe_7(int end) {
+        Observable<Integer> observerable = getObservable_7(end) ;
 
-    public static void subscribe7(int end) {
-        Observable<Integer> observerable = getObservable7(end) ;
-        observerable.subscribe(new Action1<Integer>() { // for onNext()
+        Subscription subscribe = observerable.subscribe(new Action1<Integer>() { // for onNext
             public void call(Integer i) {
-                System.out.printf("Java 7 %d\n", i) ;
+                System.out.printf("Java 7 %d\n", i);
             }
-        }) ;
+        }, new Action1<Throwable>() { // for onError
+            @Override
+            public void call(Throwable throwable) {
+            }
+        }, new Action0() { // for onComplete
+            @Override
+            public void call() {
+
+            }
+        });
     }
 
-    public static void subscribe8() {
-        subscribe8(5) ;
+    /**
+     * Java 8, create a observable with create() method and subscribe it
+     */
+    public static void subscribe_8(int end) {
+        Observable<Integer> observerable = getObservable_8(end) ;
+        // observerable.subscribe(i -> System.out.printf("Java 8 %d\n", i), throwable -> System.out.println(throwable.getMessage()), () -> System.out.println("complete")) ;
+        Subscription subscription = observerable.subscribe(
+                (i) -> {
+                    System.out.printf("Java 8 %d\n", i);
+                },
+                (throwable) -> {
+                    System.out.println(throwable.getMessage());
+                },
+                () -> {
+                    System.out.println("complete");
+                }) ;
     }
 
-    public static void subscribe8(int end) {
-        Observable<Integer> observerable = getObservable7() ;
-        observerable.subscribe(i -> System.out.printf("Java 8 %d\n", i)) ;
-    }
-
+    /**
+     * Java 8, create a observable with create() method and subscribe it on a new thread
+     */
     public static void subscribeAsync8_1() {
-        Observable<Integer> observerable = getObservable8(10000) ;
+        Observable<Integer> observerable = getObservable_8(10000) ;
         observerable.subscribeOn(Schedulers.newThread()).subscribe(i -> System.out.printf("subscribeAsync1 - %d\n", i)) ;
     }
 
+    /**
+     * Java 8, create a observable with create() method and subscribe it on a new thread
+     */
     public static void subscribeAsync8_2() {
-        Observable<Integer> observerable = getObservable8(10000) ;
+        Observable<Integer> observerable = getObservable_8(10000) ;
         observerable.subscribeOn(Schedulers.newThread()).subscribe(i -> System.out.printf("subscribeAsync2 - %d\n", i)) ;
     }
 
@@ -90,8 +115,11 @@ public class CreateObserableWithCreate {
      * Here, we want to invoke a subscriber action in both, synchronous way and asynchronous way.
      */
     public static void main(String[] args) throws InterruptedException {
-        CreateObserableWithCreate.subscribe7() ;
-        CreateObserableWithCreate.subscribe8() ;
+        // subscribe a observable created with create() method
+        CreateObserableWithCreate.subscribe_7(10) ;
+        CreateObserableWithCreate.subscribe_8(10) ;
+
+        // complete two methods in subscribing
         CreateObserableWithCreate.subscribeAsync8_1() ;
         CreateObserableWithCreate.subscribeAsync8_2() ;
 
