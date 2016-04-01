@@ -4,6 +4,8 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.functions.*;
 
+import java.util.stream.IntStream;
+
 /**
  * RxJava examples for map & flatmap
  *
@@ -14,6 +16,24 @@ public class TransformWithFlatmap {
      * Java 7, get observable to omit an Integer value from 0 to 9
      * @return
      */
+
+    public static Observable<Integer> getObservable_7() {
+        return Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                for(int i = 0 ; i < 10; i++) {
+                    subscriber.onNext(i);
+                }
+            }
+        }) ;
+    }
+
+    public static Observable<Integer> getObservable_8() {
+        return Observable.create(subscriber -> {
+            IntStream.range(0, 10).forEach(i -> subscriber.onNext(i));
+        }) ;
+    }
+
     public static Observable<Integer> getObserable_7_Error_Complete() {
         return Observable.create(new Observable.OnSubscribe<Integer>() {
             @Override
@@ -27,7 +47,7 @@ public class TransformWithFlatmap {
                 }
 
                 if (!subscriber.isUnsubscribed()) {
-                    subscriber.onError(null);
+                   subscriber.onError(null);
                 }
 
                 if (!subscriber.isUnsubscribed()) {
@@ -65,10 +85,22 @@ public class TransformWithFlatmap {
      */
     public static void main(String[] args) {
 
-        // Map examples, refer http://reactivex.io/documentation/operators/map.html
-        // map an Integer value into another Integer value.
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // map examples, refer http://reactivex.io/documentation/operators/map.html
+        //
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        // 1) map an Integer value into another Integer value.
 
-        TransformWithFlatmap.getObserable_7_Error_Complete().map(new Func1<Integer, Integer>() {
+        //    http://reactivex.io/RxJava/javadoc/rx/Observable.html#map(rx.functions.Func1)
+        //
+        //    0, 1, 2, 3, 4, 5, 6 ...
+        //   -> 0, 100, 200, 300, 400, 500, 600, ...
+        //
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        TransformWithFlatmap.getObservable_7().map(new Func1<Integer, Integer>() {
             @Override
             public Integer call(Integer v) {
                 return v * 100;
@@ -81,14 +113,14 @@ public class TransformWithFlatmap {
         }) ;
 
         // with Java 8, lambda expression
-        TransformWithFlatmap.getObserable_8_Error_Complete().map(v -> {
+        TransformWithFlatmap.getObservable_8().map(v -> {
             return v * 100;
         }).subscribe(v -> {
             System.out.println(v);
         }) ;
 
         // map an Integer value into another String value.
-        TransformWithFlatmap.getObserable_7_Error_Complete().map(new Func1<Integer, String>() {
+        TransformWithFlatmap.getObservable_7().map(new Func1<Integer, String>() {
             @Override
             public String call(Integer v) {
                 return String.valueOf(v * 100);
@@ -101,7 +133,7 @@ public class TransformWithFlatmap {
         }) ;
 
         // with Java 8, lambda expression
-        TransformWithFlatmap.getObserable_8_Error_Complete().map(v -> {
+        TransformWithFlatmap.getObservable_8().map(v -> {
             return String.valueOf(v * 100);
         }).subscribe(v -> {
             System.out.println(v);
@@ -125,7 +157,7 @@ public class TransformWithFlatmap {
         //    3 -> 0, 1, 2, 3
         //
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        TransformWithFlatmap.getObserable_7_Error_Complete().flatMap(new Func1<Integer, Observable<Integer>>() {
+        TransformWithFlatmap.getObservable_7().flatMap(new Func1<Integer, Observable<Integer>>() {
             @Override
             public Observable<Integer> call(final Integer v) {
                 return Observable.create(new Observable.OnSubscribe<Integer>() {
@@ -149,7 +181,7 @@ public class TransformWithFlatmap {
         }) ;
 
         // with Java 8, lambda expression
-        TransformWithFlatmap.getObserable_8_Error_Complete().flatMap(v -> {
+        TransformWithFlatmap.getObservable_8().flatMap(v -> {
             return Observable.create(subscriber -> {
                 for(int i = 0 ; i <= v; i++) {
                     if(!subscriber.isUnsubscribed()) {
@@ -236,16 +268,18 @@ public class TransformWithFlatmap {
 
 
         // with Java 8, lambda expression
+        // it is polulationg
+/*
         TransformWithFlatmap.getObserable_8_Error_Complete().flatMap(v -> {
-            return Observable.create(subscriber -> {
-                for(int i = 0 ; i <= v; i++) {
-                    if(!subscriber.isUnsubscribed()) {
-                        subscriber.onNext(i); ;
-                    } else {
-                        break ;
-                    }
+        return Observable.create(subscriber -> {
+            for(int i = 0 ; i <= v; i++) {
+                if(!subscriber.isUnsubscribed()) {
+                    subscriber.onNext(i); ;
+                } else {
+                    break ;
                 }
-            }) ;
+            }
+        }) ;
         }, throwable -> {
             return Observable.create(subscriber -> {
                 subscriber.onNext(-1);
@@ -255,6 +289,7 @@ public class TransformWithFlatmap {
                 subscriber.onNext(10000);
             }) ;
         }).subscribe(v -> System.out.println(v), throwable1 -> {}, () -> {}) ; ;
+*/
 
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //
@@ -277,7 +312,7 @@ public class TransformWithFlatmap {
         //      9, resultSelector 9
         //
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        TransformWithFlatmap.getObserable_7_Error_Complete().flatMap(new Func1<Integer, Observable<String>>() {
+        TransformWithFlatmap.getObservable_7().flatMap(new Func1<Integer, Observable<String>>() {
             @Override
             public Observable<String> call(Integer v) {
                 return Observable.create(new Observable.OnSubscribe<String>() {
@@ -309,7 +344,7 @@ public class TransformWithFlatmap {
         }) ;
 
         // with Java 8, lambda expression
-        TransformWithFlatmap.getObserable_8_Error_Complete().flatMap(v1 -> {
+        TransformWithFlatmap.getObservable_8().flatMap(v1 -> {
             return Observable.create(subscriber -> {
                 if (v1 % 2 == 0) {
                     subscriber.onNext("collectionSelector : " + String.valueOf(v1));
